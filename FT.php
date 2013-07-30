@@ -1,6 +1,6 @@
 <?
 
-class FailTracker {
+class FT {
 
 	private $token = "";
 	private $url = "http://failtracker-rest.herokuapp.com/fail/insert";
