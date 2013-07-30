@@ -3,8 +3,7 @@
 class FailTracker {
 
 	private $token = "";
-	// private $url = "http://failtracker-rest.herokuapp.com/fail/insert";
-	private $url = "http://localhost:3010/fail/insert";
+	private $url = "http://failtracker-rest.herokuapp.com/fail/insert";
 
 	function __construct($token){
 		$this->token = $token;
