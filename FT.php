@@ -11,24 +11,28 @@ class FT {
 
 	function send($title, $msg){
 		$data = array("title" => $title, 
-					  "content" => $msg,
-					  "token" => $this->token,
-					  "date" => time() * 1000);
-		$data_string = json_encode($data);
-		 
-		$ch = curl_init($this->url);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		    'Content-Type: application/json',
-		    'Content-Length: ' . strlen($data_string))
-		);
-		 
-		$result = curl_exec($ch);
+				  "content" => $msg,
+				  "token" => $this->token,
+				  "date" => time() * 1000);
+		$post_string = json_encode($data);
 
-		return $result;
-	}
+		$parts=parse_url($this->url);
+
+		$fp = fsockopen($parts['host'],
+		  isset($parts['port'])?$parts['port']:80,
+		  $errno, $errstr, 30);
+
+		$out = "POST ".$parts['path']." HTTP/1.1\r\n";
+		$out.= "Host: ".$parts['host']."\r\n";
+		$out.= "Content-Type: application/json\r\n";
+		$out.= "Content-Length: ".strlen($post_string)."\r\n";
+		$out.= "Connection: Close\r\n\r\n";
+		$out.= $post_string;
+
+
+		fwrite($fp, $out);
+		fclose($fp);
+	  }
 }
 
 ?>

@@ -7,5 +7,5 @@ Create a new instance of FT which accepts token of your project from [failtracke
 
     
         $ft = new FT("[project token]");
-        $ft.send('Title', 'Detailed message about failure');
+        $ft->send('Title', 'Detailed message about failure');
     
